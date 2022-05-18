@@ -8,12 +8,12 @@ SELECT * FROM albums;
 -- 3a. There are 31 rows in the album table. 
 
 SELECT count(distinct(artist)) from albums;
--- 3b. There are 23 unique artists.alter
+-- 3b. There are 23 unique artistsB
 
 DESCRIBE albums;
 -- 3c. The PRI key in albums is the id
 
-SELECT release_date from albums WHERE release_date < 1977;
+SELECT min(release_date) from albums WHERE release_date < 1977;
 -- 3d. The oldest release date is 1967
 
 DESCRIBE albums;
@@ -38,3 +38,4 @@ DESCRIBE albums;
 SELECT name FROM albums WHERE genre = "rock";
 -- 4f. All albums with a genre of Rock. These don't include other types of rock because I didn't specifically ask to receive those kinds
 
+ 
