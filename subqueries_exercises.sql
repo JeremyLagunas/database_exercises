@@ -188,3 +188,143 @@ WHERE
 FROM
 	salaries;
 -- 0.0029%
+
+## BONUS
+
+# 1. 
+SELECT 
+	emp_no
+FROM
+	dept_manager
+WHERE
+	to_date > CURDATE();
+-- emp_no of current managers
+    
+SELECT
+	emp_no
+FROM
+	employees
+WHERE
+	emp_no IN (SELECT 
+	emp_no
+FROM
+	dept_manager
+WHERE
+	to_date > CURDATE())
+    AND gender = 'f';
+-- emp_no of current female managers
+    
+SELECT 
+    dept_no
+FROM
+	dept_emp
+WHERE
+	emp_no IN (SELECT
+	emp_no
+FROM
+	employees
+WHERE
+	emp_no IN (SELECT 
+	emp_no
+FROM
+	dept_manager
+WHERE
+	to_date > CURDATE())
+    AND gender = 'f');
+-- dept_no of current female managers
+
+SELECT
+	dept_name
+FROM
+	departments
+WHERE
+	dept_no IN (SELECT 
+    dept_no
+FROM
+	dept_emp
+WHERE
+	emp_no IN (SELECT
+	emp_no
+FROM
+	employees
+WHERE
+	emp_no IN (SELECT 
+	emp_no
+FROM
+	dept_manager
+WHERE
+	to_date > CURDATE())
+    AND gender = 'f'));
+-- dept_name of departments with current female managers
+
+# 2. 
+SELECT
+	emp_no
+FROM 
+	salaries
+ORDER BY 
+	salary DESC
+LIMIT 
+	1;
+-- highest salary
+
+SELECT
+	first_name, last_name
+FROM
+	employees
+WHERE 
+	emp_no = (SELECT
+	emp_no
+FROM 
+	salaries
+ORDER BY 
+	salary DESC
+LIMIT 
+	1);
+-- Tokuyasu Pesch
+
+# 3.
+SELECT
+	emp_no
+FROM 
+	salaries
+ORDER BY 
+	salary DESC
+LIMIT 
+	1;
+-- highest salary emp_no
+
+SELECT
+	dept_no
+FROM
+	dept_emp
+WHERE
+	emp_no = (SELECT
+	emp_no
+FROM 
+	salaries
+ORDER BY 
+	salary DESC
+LIMIT 
+	1);
+-- dept_no the highest paid emp works in
+	
+SELECT
+	dept_name
+FROM
+	departments
+WHERE
+	dept_no = (SELECT
+	dept_no
+FROM
+	dept_emp
+WHERE
+	emp_no = (SELECT
+	emp_no
+FROM 
+	salaries
+ORDER BY 
+	salary DESC
+LIMIT 
+	1));
+-- Sales
